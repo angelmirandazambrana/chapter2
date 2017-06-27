@@ -1,0 +1,27 @@
+{
+  "name": "chapter2",
+  "version": "1.0.0",
+  "description": "none",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angelmirandazambrana/chapter2.git"
+  },
+  "author": "AMZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angelmirandazambrana/chapter2/issues"
+  },
+  "homepage": "https://github.com/angelmirandazambrana/chapter2#readme",
+  "dependencies": {
+    "connect": "^3.6.2",
+    "cookie": "^0.3.1",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "socket.io": "^2.0.3",
+    "socket.io-redis": "^5.1.0"
+  }
+}
