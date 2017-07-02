@@ -1,8 +1,59 @@
-<script src="/socket.io/socket.io.js"></script>
+<html>
+
+<head>
+  <title>Ping Pong</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  Ping Pong!!!!
+  <div class="form-group">
+    <input type="text" id="username" class="form-control">
+    <button id="ding" class="btn btn-primary">Ding</button>
+    <div id="sent"></div>
+    <ul id="info">
+    </ul>
+  </div>
+</body>
+
 <script>
-  var socket = io.connect('http://localhost');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
+  var socket = io.connect('http://localhost:4000');
+  var $username=$('#username'),
+    $ding=$('#ding'),
+    $info=$('#info');
+    $sent=$('#sent');
+  var pingSent=0;
+
+  
+  function addLi(message) {
+    $info.append('<li>'+message+'</li>');
+  };
+
+  $username.on('change',function(){
+    socket.emit('join',{username: $username.val()});
+  });
+
+  socket.on('userJoined', function(data){
+    addLi(data.username + ' has joined the chat');
+  });
+
+  $ding.on('click', function(){
+    socket.emit('ding',null,function(message){
+      if (message==='ack')
+      {
+        pingSent++;
+        $sent.html('Pings sent:'+pingSent);
+      }
+    } );
+  });
+
+  socket.on('ding', function(data){
+    addLi(data.username + ' has dinged!');
+  });
+
+  socket.on('userDisconnect', function(data){
+    addLi(data.username + ' has left :(' );
   });
 </script>
+</html>
